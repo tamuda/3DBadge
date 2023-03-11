@@ -56,13 +56,13 @@ function App() {
   return (
     <div
       className="App flex flex-col justify-center items-center"
-      style={{ height: "100vh", width: "100vw", background: "black" }}
+      style={{ height: "100vh", width: "100vw", background: "white" }}
     >
       <span />
-      <h1 style={{ marginTop: "auto", color: "white" }}>Penpal Badge</h1>
+      <h1 style={{ marginTop: "auto", color: "brown" }}>Penpal Badge</h1>
 
       <Canvas
-        style={{ height: "100vh", width: "100vw", background: "black" }}
+        style={{ height: "100vh", width: "100vw", background: "white" }}
         pixelRatio={window.devicePixelRatio}
         gl={{ antialias: true }}
         background="black"
