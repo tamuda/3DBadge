@@ -10,59 +10,45 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Suspense, useRef } from "react";
 
 export function Model(props) {
-  const group = useRef();
-  const { nodes, materials, animations } = useGLTF("/badged-transformed.glb");
-  const { actions } = useAnimations(animations, group);
-  useFrame(({ clock }) => {
-    group.current.rotation.x = Math.PI / 2;
-    group.current.rotation.z = clock.getElapsedTime() * 0.5;
-  });
-
+  const { nodes, materials } = useGLTF("/mybadge.glb");
   return (
-    <group ref={group} {...props} dispose={null}>
-      <group name="Scene">
+    <group {...props} dispose={null}>
+      <mesh
+        geometry={nodes.Curve006.geometry}
+        material={materials["Material.001"]}
+        scale={20}
+      >
         <mesh
-          name="Curve001"
           geometry={nodes.Curve001.geometry}
           material={materials["SVGMat.001"]}
-          position={[0, 0, 0.23]}
-          scale={10}
+          position={[-0.03, -0.06, 0.008]}
+          scale={0.75}
         />
         <mesh
-          name="Curve002"
           geometry={nodes.Curve002.geometry}
           material={materials["SVGMat.001"]}
-          position={[0, 0, 0.23]}
-          scale={10}
+          position={[-0.01, -0.06, 0.01]}
+          scale={0.75}
         />
         <mesh
-          name="Curve003"
           geometry={nodes.Curve003.geometry}
           material={materials["SVGMat.001"]}
-          position={[0.22, 0, 0]}
-          scale={10}
+          position={[0.06, 0.01, 0.0035]}
+          scale={0.75}
         />
         <mesh
-          name="Curve004"
           geometry={nodes.Curve004.geometry}
           material={materials["SVGMat.001"]}
-          position={[0.22, 0, 0]}
-          scale={10}
+          position={[0.06, 0.03, 0]}
+          scale={0.75}
         />
         <mesh
-          name="Curve005"
           geometry={nodes.Curve005.geometry}
           material={materials.Material}
-          scale={10}
+          scale={0.75}
+          position={[0.0, 0.0, 0.005]}
         />
-        <mesh
-          name="Curve006"
-          geometry={nodes.Curve006.geometry}
-          material={materials["Material.001"]}
-          position={[1.41, 0, -1.62]}
-          scale={13.34}
-        />
-      </group>
+      </mesh>
     </group>
   );
 }
@@ -70,26 +56,26 @@ function App() {
   return (
     <div
       className="App flex flex-col justify-center items-center"
-      style={{ height: "100vh", width: "100vw" }}
+      style={{ height: "100vh", width: "100vw", background: "black" }}
     >
-      <h1 className="text-blue">HI</h1>
+      <span />
+      <h1 style={{ marginTop: "auto", color: "white" }}>Penpal Badge</h1>
+
       <Canvas
-        style={{ height: "100vh", width: "100vw" }}
+        style={{ height: "100vh", width: "100vw", background: "black" }}
         pixelRatio={window.devicePixelRatio}
         gl={{ antialias: true }}
-        color="black"
-        camera={{ position: [0, 0, 20], fov: 20 }}
+        background="black"
+        gammaFactor={2.2}
+        gammaOutput={2.2}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.2}>
-            <spotLight
-              intensity={1}
-              angle={0.5}
-              penumbra={1}
-              position={[10, 15, 10]}
-              castShadow
-            />
+          <ambientLight intensity={0.01}>
+            <directionalLight intensity={1} position={[1, 3, 50]} castShadow />
+            <directionalLight intensity={1} position={[1, 3, -50]} castShadow />
+
             <Model />
+
             <OrbitControls
               enablePan={false}
               enableZoom={false}
